@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  java-test-app-1:
+    build: ./Java-testapp-1
+    ports:
+      - "7000:8080"
+    container_name: javacontainer1
+    #networks:
+    #  - frontend
+  
+  java-test-app-2:
+    build: ./Java-testapp-2
+    ports:
+      - "8000:8080"
+    container_name: javacontainer2
+    #networks:
+    #  - frontend
+
+  nginx:
+    build: ./reverse-proxy
+    ports:
+      - "80:80"
+    links:
+      - java-test-app-1
+      - java-test-app-2
+    container_name: reverse-proxy
+    # networks:
+    #  - frontend
+
+    #networks:
+    # frontend:
+    #     #driver: custom-driver-1
